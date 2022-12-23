@@ -7,6 +7,8 @@
 
 int main(int argc, char *argv[])
 {
+    //make sure shmpath exists.
+    
     usleep(10000);
     if (argc != 2) {
         fprintf(stderr, "Usage: %s /shm-path\n", argv[0]);
@@ -30,7 +32,8 @@ int main(int argc, char *argv[])
     for (size_t ts = 0; ts < TEST_ROUND; ++ts) {
         while (shmp->idx != ts) continue;  
         if (ts > 0) {   
-            local_time_sum += std::chrono::system_clock::now().time_since_epoch().count()
+            const auto now = std::chrono::system_clock::now().time_since_epoch().count();
+            local_time_sum += now
             - shmp->local_time;
         }
     }
